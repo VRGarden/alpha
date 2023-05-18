@@ -46,6 +46,7 @@ namespace VRGardenAlpha
             app.MapControllers();
 
             app.Run();
+            // Run the application
         }
     }
 }
