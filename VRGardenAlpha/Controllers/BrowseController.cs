@@ -30,7 +30,7 @@ namespace VRGardenAlpha.Controllers
         public async Task<IActionResult> GetPostAsync(int id)
         {
             var post = await _ctx.Posts.FindAsync(id);
-            if (post == null)
+            if (post == null || post.ACL != ACL.Public)
                 return NotFound();
 
             return Ok(_mapper.Map<PostModel>(post));

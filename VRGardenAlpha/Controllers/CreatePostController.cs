@@ -1,9 +1,7 @@
 using AutoMapper;
 using Meilisearch;
-using Microsoft.AspNetCore.Hosting.StaticWebAssets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using System.ComponentModel.DataAnnotations;
 using System.IO.Compression;
