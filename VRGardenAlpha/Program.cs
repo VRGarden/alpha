@@ -27,6 +27,7 @@ namespace VRGardenAlpha
 
             builder.Services.AddDbContext<GardenContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("Main")));
 
+            builder.Services.AddCors();
             builder.Services.AddHttpClient();
             builder.Services.AddMemoryCache();
             builder.Services.AddMeilisearch();
@@ -41,6 +42,8 @@ namespace VRGardenAlpha
                 .AllowAnyHeader()
                 .AllowAnyMethod()
                 .WithOrigins(domains ?? Array.Empty<string>()));
+
+            Console.WriteLine("Using CORS domains: " + cors);
 
             var options = app.Services.GetService<IOptions<StorageOptions>>();
             app.UseStaticFiles(new StaticFileOptions()
