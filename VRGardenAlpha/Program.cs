@@ -34,6 +34,13 @@ namespace VRGardenAlpha
             builder.Services.AddControllers();
 
             var app = builder.Build();
+            string? cors = builder.Configuration["Garden:CorsDomains"];
+            string[]? domains = cors?.Split(',').Select(x => x.Trim()).ToArray();
+
+            app.UseCors(x => x
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .WithOrigins(domains ?? Array.Empty<string>()));
 
             var options = app.Services.GetService<IOptions<StorageOptions>>();
             app.UseStaticFiles(new StaticFileOptions()
