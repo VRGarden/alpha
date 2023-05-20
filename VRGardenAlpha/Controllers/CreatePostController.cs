@@ -25,6 +25,7 @@ namespace VRGardenAlpha.Controllers
         private readonly GardenContext _ctx;
         private readonly StorageOptions _options;
         private readonly MeilisearchClient _client;
+        private readonly GardenOptions _gardenOptions;
         private readonly IRemoteAddressService _remote;
         private readonly ILogger<CreatePostController> _logger;
 
@@ -39,11 +40,12 @@ namespace VRGardenAlpha.Controllers
 
         public CreatePostController(
                 IMapper mapper,
-                IOptions<StorageOptions> options,
-                MeilisearchClient client,
                 GardenContext ctx,
+                MeilisearchClient client,
+                IRemoteAddressService remote,
+                IOptions<StorageOptions> options,
                 ILogger<CreatePostController> logger,
-                IRemoteAddressService remote
+                IOptions<GardenOptions> gardenOptions
             )
         {
             _ctx = ctx;
@@ -52,6 +54,7 @@ namespace VRGardenAlpha.Controllers
             _logger = logger;
             _remote = remote;
             _options = options.Value;
+            _gardenOptions = gardenOptions.Value;
         }
 
         [HttpPost]
@@ -62,6 +65,13 @@ namespace VRGardenAlpha.Controllers
             if (!ModelState.IsValid)
                 return ValidationProblem(ModelState);
 
+            if (request.RemoteId != null || request.Author == "System")
+            {
+                string? header = Request.Headers["X-Bot-Password"];
+                if (header != _gardenOptions.BotPassword)
+                    return Unauthorized(new { error = "credentials.invalid" });
+            }
+
             var post = new Post()
             {
                 ACL = ACL.Incomplete,
@@ -71,6 +81,7 @@ namespace VRGardenAlpha.Controllers
                 Author = request.Author,
                 ContentLength = -1,
                 Creator = request.Creator,
+                RemoteId = request.RemoteId,
                 ContentLink = request.ContentLink,
                 ImageContentType = "image/jpeg",
                 Checksum = "PENDING_FILE_UPLOAD",

@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Options;
+using System.Diagnostics;
 using VRGardenAlpha.Data;
 using VRGardenAlpha.Models.Options;
 using VRGardenAlpha.Services.Analytics;
 using VRGardenAlpha.Services.Security;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace VRGardenAlpha
 {
@@ -44,6 +46,20 @@ namespace VRGardenAlpha
 
             app.UseAuthorization();
             app.MapControllers();
+
+            app.MapFallback(async (ctx) =>
+            {
+                var error = new
+                {
+                    Type = "ENDPOINT_NOT_FOUND",
+                    Title = $"The requested resource '{ctx.Request.Path}' does not exist on the server.",
+                    TraceId = Activity.Current?.Id ?? ctx.TraceIdentifier,
+                    Status = 404
+                };
+
+                ctx.Response.StatusCode = 404;
+                await ctx.Response.WriteAsJsonAsync(error);
+            });
 
             app.Run();
             // Run the application
