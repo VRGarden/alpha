@@ -14,6 +14,9 @@ namespace VRGardenAlpha.Models
         public required string ContentType { get; set; }
 
         [FromForm]
+        public string? RemoteHost { get; set; }
+
+        [FromForm]
         [Required]
         public required int Chunks { get; set; }
 

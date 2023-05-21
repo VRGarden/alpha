@@ -205,10 +205,14 @@ namespace VRGardenAlpha.Controllers
                 string proto = Request.Headers["X-Forwarded-Proto"].FirstOrDefault() ?? 
                     (Request.IsHttps ? "https" : "http");
 
+                var host = Request.Headers.Host;
+                if (Request.Headers["X-Bot-Password"] == _gardenOptions.BotPassword)
+                    host = request.RemoteHost;
+                
                 var index = _client.Index("vrcg-posts");
                 var sp = _mapper.Map<SearchablePost>(post);
                 sp.Thumbnail = proto + "://"
-                    + Request.Headers.Host + "/@storage/"
+                    + host + "/@storage/"
                     + post.Id.ToString() + "_image"
                     + (post.ImageContentType == "image/gif" ? ".gif" : ".jpg");
 
