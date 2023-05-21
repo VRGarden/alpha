@@ -20,7 +20,7 @@ namespace VRGardenAlpha.Services.Analytics
             bool can = false;
             var ip = _remote.GetIPAddress(ctx);
             if (!_cache.TryGetValue(new Correlation(postId, ip, "download"), out DateTimeOffset ts))
-                return true;
+                can = true;
 
             if ((DateTimeOffset.UtcNow - ts).TotalMinutes >= 60)
                 can = true;

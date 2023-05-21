@@ -26,12 +26,12 @@ namespace VRGardenAlpha.Controllers
         {
             var index = _client.Index("vrcg-posts");
 
-            await index.UpdateFilterableAttributesAsync(new string[]
+            await index.UpdateSearchableAttributesAsync(new string[]
             {
                 ""
             });
             
-
+            
             return NoContent();
         }
 
