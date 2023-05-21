@@ -10,6 +10,7 @@ namespace VRGardenAlpha.Data
         public int Views { get; set; }              // Views on this post
         public int Downloads { get; set; }          // Downloads on this post
         public required ACL ACL { get; set; }       // Access Control List for this post
+        public required Platform Platform { get; set; } // Platform of this post
 
         public string? Email { get; set; }              // Uploader's email (optional)
         public required string Author { get; set; }     // Uploader's username, that they specify

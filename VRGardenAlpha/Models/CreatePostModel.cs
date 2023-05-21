@@ -30,11 +30,8 @@ namespace VRGardenAlpha.Models
         [StringLength(64, MinimumLength = 2, ErrorMessage = "creator.length")]
         public required string Creator { get; set; }    // The name of the creator of the post, if differs from the author.
 
-        [Required(ErrorMessage = "nsfw.required")]
-        public bool NSFW { get; set; }
-
         [Required(ErrorMessage = "platform.required")]
-        public Platform Platform { get; set; }
+        public required Platform Platform { get; set; }
 
         [Required(ErrorMessage = "tags.required")]
         public List<string> Tags { get; set; } = new List<string>();    // The tags describing the post

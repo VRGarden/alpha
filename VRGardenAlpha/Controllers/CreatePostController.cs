@@ -77,6 +77,7 @@ namespace VRGardenAlpha.Controllers
                 Description = request.Description,
                 Email = request.Email,
                 Author = request.Author,
+                Platform = request.Platform,
                 ContentLength = -1,
                 Creator = request.Creator,
                 RemoteId = request.RemoteId,
