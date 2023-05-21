@@ -14,10 +14,13 @@ namespace VRGardenAlpha.Filters
             var captcha = ctx.HttpContext.RequestServices.GetRequiredService<ICaptchaService>();
             var options = ctx.HttpContext.RequestServices.GetRequiredService<IOptions<GardenOptions>>();
             string? masterPwClaim = ctx.HttpContext.Request.Headers["X-Master-Password"];
+            string? botPwClaim = ctx.HttpContext.Request.Headers["X-Bot-Password"];
             string? claim = ctx.HttpContext.Request.Headers["X-Captcha"];
             // Later, implement a thing that ignores captcha requirement for System bots and etc.
 
-            if (!options.Value.RequiresCaptcha || masterPwClaim == options.Value.MasterPassword)
+            if (!options.Value.RequiresCaptcha 
+                || masterPwClaim == options.Value.MasterPassword
+                || botPwClaim == options.Value.BotPassword)
             {
                 await next();
                 return;
