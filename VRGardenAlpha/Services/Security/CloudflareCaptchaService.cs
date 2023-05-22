@@ -28,8 +28,6 @@ namespace VRGardenAlpha.Services.Security
             if (ctx != null)
                 remoteip = _remote.GetIPAddress(ctx).ToString();
 
-            Console.WriteLine(remoteip);
-            
             var data = new
             {
                 secret = _options.SecretKey,
@@ -37,12 +35,8 @@ namespace VRGardenAlpha.Services.Security
                 remoteip,
             };
 
-            Console.WriteLine(JsonSerializer.Serialize(data));
-
             using var response = await _client.PostAsJsonAsync(_options.Endpoint, data);
             var captcha = await response.Content.ReadFromJsonAsync<CaptchaResponse>();
-
-            Console.WriteLine(await response.Content.ReadAsStringAsync());
 
             return captcha?.Success == true;
         }
