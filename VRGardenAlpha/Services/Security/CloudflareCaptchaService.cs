@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using System.Text.Json;
 using VRGardenAlpha.Models.Options;
 
 namespace VRGardenAlpha.Services.Security
@@ -26,6 +27,8 @@ namespace VRGardenAlpha.Services.Security
             string? remoteip = null;
             if (ctx != null)
                 remoteip = _remote.GetIPAddress(ctx).ToString();
+
+            Console.WriteLine(remoteip);
             
             var data = new
             {
@@ -34,8 +37,12 @@ namespace VRGardenAlpha.Services.Security
                 remoteip,
             };
 
+            Console.WriteLine(JsonSerializer.Serialize(data));
+
             using var response = await _client.PostAsJsonAsync(_options.Endpoint, data);
             var captcha = await response.Content.ReadFromJsonAsync<CaptchaResponse>();
+
+            Console.WriteLine(await response.Content.ReadAsStringAsync());
 
             return captcha?.Success == true;
         }
