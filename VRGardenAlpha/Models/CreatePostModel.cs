@@ -35,5 +35,8 @@ namespace VRGardenAlpha.Models
 
         [Required(ErrorMessage = "tags.required")]
         public List<string> Tags { get; set; } = new List<string>();    // The tags describing the post
+
+        [Required(ErrorMessage = "features.required")]
+        public List<string> Features { get; set; } = new List<string>(); // The special tags describing the post
     }
 }

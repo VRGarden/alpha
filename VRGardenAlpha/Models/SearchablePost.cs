@@ -18,6 +18,7 @@ namespace VRGardenAlpha.Models
         public string? Thumbnail { get; set; }
         public required string FileName { get; set; }                           // Original name of the file
         public List<string> Tags { get; set; } = new List<string>();            // The tags describing the post
+        public List<string> Features { get; set; } = new List<string>();        // The special tags describing the post
         public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.UtcNow;  // The exact time the post was created
     }
 }

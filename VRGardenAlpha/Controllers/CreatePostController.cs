@@ -27,6 +27,17 @@ namespace VRGardenAlpha.Controllers
         private readonly IRemoteAddressService _remote;
         private readonly ILogger<CreatePostController> _logger;
 
+        private readonly static string[] _allowedFeatureTags = new string[]
+        {
+            "sdk2",
+            "sdk3",
+            "dps",
+            "fbt",
+            "nsfw",
+            "fbt",
+            "physbones"
+        };
+
         private readonly static string[] _allowedImageTypes = new string[]
         {
             "image/png",
@@ -75,6 +86,9 @@ namespace VRGardenAlpha.Controllers
 
             if (request.Tags.Any(x => x.Length > 32))
                 return BadRequest(new { error = "tags.length" });
+
+            if (request.Features.Any(x => !_allowedFeatureTags.Contains(x)))
+                return BadRequest(new { error = "features.invalid" });
 
             var post = new Post()
             {

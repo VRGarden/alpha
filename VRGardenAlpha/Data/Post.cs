@@ -34,6 +34,7 @@ namespace VRGardenAlpha.Data
         public long ImageContentLength { get; set; } = -1;
 
         public List<string> Tags { get; set; } = new List<string>();            // The tags describing the post
+        public List<string> Features { get; set; } = new List<string>();        // The special tags describing the post
         public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.UtcNow;  // The exact time the post was created
         public int LastChunk { get; set; }
         public int Chunks { get; set; }

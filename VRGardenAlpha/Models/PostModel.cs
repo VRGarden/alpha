@@ -25,6 +25,7 @@ namespace VRGardenAlpha.Models
         public long ImageContentLength { get; set; }
         
         public List<string> Tags { get; set; } = new List<string>();            // The tags describing the post
+        public List<string> Features { get; set; } = new List<string>();        // The special tags describing the post
         public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.UtcNow;  // The exact time the post was created
     }
 }
