@@ -39,6 +39,7 @@ namespace VRGardenAlpha.Controllers
                 "views",
                 "downloads",
                 "tags",
+                "features",
                 "platform",
                 "contentLink"
             });
