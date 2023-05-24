@@ -50,7 +50,8 @@ namespace VRGardenAlpha.Controllers
                 "views",
                 "downloads",
                 "platform",
-                "timestamp"
+                "timestamp",
+                "timestampISO"
             });
             
             return NoContent();
