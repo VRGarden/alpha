@@ -28,9 +28,29 @@ namespace VRGardenAlpha.Controllers
 
             await index.UpdateSearchableAttributesAsync(new string[]
             {
-                ""
+                "title",
+                "description",
+                "author",
+                "creator"
             });
-            
+
+            await index.UpdateFilterableAttributesAsync(new string[]
+            {
+                "views",
+                "downloads",
+                "tags",
+                "platform",
+                "contentLink"
+            });
+
+            await index.UpdateSortableAttributesAsync(new string[]
+            {
+                "title",
+                "views",
+                "downloads",
+                "platform",
+                "timestamp"
+            });
             
             return NoContent();
         }

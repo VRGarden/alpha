@@ -70,6 +70,12 @@ namespace VRGardenAlpha.Controllers
                     return Unauthorized(new { error = "credentials.invalid" });
             }
 
+            if (request.Tags.Count > 32)
+                return BadRequest(new { error = "tags.size" });
+
+            if (request.Tags.Any(x => x.Length > 32))
+                return BadRequest(new { error = "tags.length" });
+
             var post = new Post()
             {
                 ACL = ACL.Incomplete,
@@ -97,7 +103,7 @@ namespace VRGardenAlpha.Controllers
         }
 
         [HttpPost("{id}/image")]
-        public async Task<IActionResult> UploadImageAsync(int id, [FromForm][Required(ErrorMessage = "image.required")] IFormFile image)
+        public async Task<IActionResult> UploadImageAsync(int id, [FromForm] [Required(ErrorMessage = "image.required")] IFormFile image)
         {
             if (!ModelState.IsValid)
                 return ValidationProblem(ModelState);
