@@ -9,7 +9,9 @@ namespace VRGardenAlpha
         public VRClassMap()
         {
             CreateMap<Post, PostModel>();   
-            CreateMap<Post, SearchablePost>(); 
+            CreateMap<Post, SearchablePost>()
+                .ForMember(x => x.TimestampISO, opt =>
+                    opt.MapFrom(src => src.Timestamp));
         }
     }
 }
