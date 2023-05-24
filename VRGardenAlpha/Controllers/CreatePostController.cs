@@ -107,7 +107,8 @@ namespace VRGardenAlpha.Controllers
                 FileName = "PENDING_FILE_UPLOAD",
                 ContentType = "application/octet-stream",
                 AuthorIP = _remote.GetIPAddress(HttpContext),
-                Tags = request.Tags
+                Tags = request.Tags,
+                Features = request.Features
             };
 
             await _ctx.Posts.AddAsync(post);
