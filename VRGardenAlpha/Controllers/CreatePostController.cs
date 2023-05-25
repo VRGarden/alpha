@@ -46,7 +46,7 @@ namespace VRGardenAlpha.Controllers
             "image/jpg",
             "image/gif"
         };
-
+        
         public CreatePostController(
                 IMapper mapper,
                 GardenContext ctx,
@@ -204,7 +204,7 @@ namespace VRGardenAlpha.Controllers
                 fs.Close();
 
                 post.LastChunk = request.Chunk;
-                post.ContentLength += data.Length;
+                post.ContentLength += request.Data.Length;
             }
 
             if (post.Chunks == post.LastChunk)
@@ -245,7 +245,7 @@ namespace VRGardenAlpha.Controllers
         }
 
         [NonAction]
-        private bool VerifyFileType(Post post, string path)
+        private static bool VerifyFileType(Post post, string path)
         {
             if (post.ContentType == "application/gzip")
                 return VerifyUnityPackageBase(path);
@@ -254,7 +254,7 @@ namespace VRGardenAlpha.Controllers
         }
 
         [NonAction]
-        private bool VerifyUnityPackageBase(string path)
+        private static bool VerifyUnityPackageBase(string path)
         {
             using var fs = new FileStream(path, FileMode.Open);
             var first = fs.ReadByte();
@@ -264,7 +264,7 @@ namespace VRGardenAlpha.Controllers
         }
 
         [NonAction]
-        private bool VerifyZip(string path)
+        private static bool VerifyZip(string path)
         {
             try
             {

@@ -272,7 +272,7 @@ namespace VRGardenAlpha.Controllers
                 fs.Close();
 
                 curr.LastChunk = request.Chunk;
-                curr.ContentLength += data.Length;
+                curr.ContentLength += request.Data.Length;
             }
 
             if (curr.Chunks == curr.LastChunk)

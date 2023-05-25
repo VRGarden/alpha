@@ -20,6 +20,9 @@ namespace VRGardenAlpha.Models
         public string? Passcode { get; set; }
 
         [FromForm]
+        public string? Role { get; set; }
+
+        [FromForm]
         [Required(AllowEmptyStrings = false, ErrorMessage = "chunks.required")]
         public required int Chunks { get; set; }
 
@@ -30,6 +33,5 @@ namespace VRGardenAlpha.Models
         [FromForm]
         [Required(AllowEmptyStrings = false, ErrorMessage = "data.required")]
         public required IFormFile Data { get; set; }
-        public string Role { get; internal set; }
     }
 }
