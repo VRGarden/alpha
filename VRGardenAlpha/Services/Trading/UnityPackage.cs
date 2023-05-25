@@ -1,12 +1,11 @@
 ﻿using ICSharpCode.SharpZipLib.GZip;
-using ICSharpCode.SharpZipLib.Tar;
-using System.Text;
+using System.Formats.Tar;
 
 namespace VRGardenAlpha.Services.Trading
 {
     public class UnityPackage
     {
-        public static string? Extract(string src)
+        public static async Task<string?> Extract(string src)
         {
             var dest = Directory.CreateTempSubdirectory("vrcg");
 
@@ -14,12 +13,27 @@ namespace VRGardenAlpha.Services.Trading
             {
                 using var stream = File.OpenRead(src);
                 using var gzip = new GZipInputStream(stream);
-                using var tar = TarArchive.CreateInputTarArchive(gzip, Encoding.UTF8);
+                using var tar = new TarReader(gzip);
 
-                tar.ExtractContents(dest.FullName);
-                tar.Close();
-                gzip.Close();
+                TarEntry? entry;
 
+                do
+                {
+                    entry = await tar.GetNextEntryAsync();
+                    if (entry == null)
+                        break;
+
+                    if (entry.Name.EndsWith("pathname"))
+                    {
+                        string path = Path.Combine(dest.FullName, Guid.NewGuid().ToString() + "/pathname");
+                        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+                        
+                        await entry.ExtractToFileAsync(path, true);
+                    }
+                }
+                while (entry != null);
+
+                tar.Dispose();
                 return dest.FullName;
             }
             catch

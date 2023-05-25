@@ -12,10 +12,10 @@ namespace VRGardenAlpha.Data
         public required TradeDetails Initiator { get; set; }
         
         [Column(TypeName = "jsonb")]
-        public required TradeDetails Recepient { get; set; }
+        public required TradeDetails Recipient { get; set; }
 
         public string[]? InitiatorPaths { get; set; }
-        public string[]? RecepientPaths { get; set; }
+        public string[]? RecipientPaths { get; set; }
     }
 
     public class TradeDetails
@@ -23,7 +23,7 @@ namespace VRGardenAlpha.Data
         public required string Title { get; set; }
         public required string Creator { get; set; }
         public required string Trader { get; set; }
-        public bool Agreed { get; set; } = false;
+        public bool Accepted { get; set; } = false;
         public string? Passcode { get; set; }
         public string? ContentLink { get; set; }            // Link to other places the content may be found
 

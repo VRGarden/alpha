@@ -30,5 +30,6 @@ namespace VRGardenAlpha.Models
         [FromForm]
         [Required(AllowEmptyStrings = false, ErrorMessage = "data.required")]
         public required IFormFile Data { get; set; }
+        public string Role { get; internal set; }
     }
 }

@@ -140,20 +140,12 @@ namespace VRGardenAlpha.Controllers
             if (!_allowedImageTypes.Contains(image.ContentType))
                 return BadRequest(new { error = "contentType.invalid" });
 
-            using var @is = await Image.LoadAsync(image.OpenReadStream());
             string ext = image.ContentType == "image/gif" ? ".gif" : ".jpg";
             string path = Path.Combine(_options.MountPath!, post.Id.ToString() + "_image" + ext);
-
-            using (var fs = new FileStream(path, FileMode.OpenOrCreate))
-            {
-                if (image.ContentType == "image/gif")
-                    await @is.SaveAsGifAsync(fs);
-                else
-                    await @is.SaveAsJpegAsync(fs);
-            }
-
+            await ImageProcessor.ProcessImage(image.OpenReadStream(), image.ContentType, path);
+            
             var fi = new FileInfo(path);
-            post.ImageContentType = image.ContentType;
+            post.ImageContentType = image.ContentType == "image/gif" ? image.ContentType : "image/jpeg";
             post.ImageContentLength = fi.Length;
 
             await _ctx.SaveChangesAsync();
