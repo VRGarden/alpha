@@ -14,8 +14,8 @@ using VRGardenAlpha.Data;
 namespace VRGardenAlpha.Migrations
 {
     [DbContext(typeof(GardenContext))]
-    [Migration("20230525034343_Trading")]
-    partial class Trading
+    [Migration("20230525060154_First")]
+    partial class First
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -34,7 +34,6 @@ namespace VRGardenAlpha.Controllers
             "dps",
             "fbt",
             "nsfw",
-            "fbt",
             "physbones"
         };
 

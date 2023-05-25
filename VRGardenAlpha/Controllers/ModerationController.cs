@@ -62,7 +62,6 @@ namespace VRGardenAlpha.Controllers
             return NoContent();
         }
 
-
         [HttpPost]
         [RequiresMaster]
         [Route("_search/settings/push")]
