@@ -23,6 +23,7 @@ namespace VRGardenAlpha.Data
         public required string Title { get; set; }
         public required string Creator { get; set; }
         public required string Trader { get; set; }
+        public bool Agreed { get; set; } = false;
         public string? Passcode { get; set; }
         public string? ContentLink { get; set; }            // Link to other places the content may be found
 

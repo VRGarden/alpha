@@ -9,5 +9,7 @@ namespace VRGardenAlpha.Data
         #pragma warning restore 8618
         
         public DbSet<Post> Posts { get; set; }
+
+        public DbSet<Trade> Trades { get; set; }
     }
 }
