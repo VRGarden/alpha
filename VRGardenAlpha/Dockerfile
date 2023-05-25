@@ -17,6 +17,9 @@ RUN dotnet publish "VRGardenAlpha.csproj" -c Release -o /app/publish /p:UseAppHo
 
 FROM base AS final
 WORKDIR /app
+
 RUN mkdir -p /var/www/vrcg-storage
+RUN mkdir -p /var/www/vrcg-trades-storage
+
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "VRGardenAlpha.dll"]
