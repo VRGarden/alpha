@@ -12,6 +12,8 @@ namespace VRGardenAlpha
             CreateMap<Post, SearchablePost>()
                 .ForMember(x => x.TimestampISO, opt =>
                     opt.MapFrom(src => src.Timestamp));
+
+            CreateMap<Trade, TradeModel>();
         }
     }
 }

@@ -17,15 +17,18 @@ namespace VRGardenAlpha.Models
         public string? RemoteHost { get; set; }
 
         [FromForm]
-        [Required]
+        public string? Passcode { get; set; }
+
+        [FromForm]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "chunks.required")]
         public required int Chunks { get; set; }
 
         [FromForm]
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "chunk.required")]
         public required int Chunk { get; set; }
 
         [FromForm]
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "data.required")]
         public required IFormFile Data { get; set; }
     }
 }

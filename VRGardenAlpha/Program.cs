@@ -6,6 +6,7 @@ using VRGardenAlpha.Data;
 using VRGardenAlpha.Models.Options;
 using VRGardenAlpha.Services.Analytics;
 using VRGardenAlpha.Services.Security;
+using VRGardenAlpha.Services.Trading;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace VRGardenAlpha
@@ -24,6 +25,7 @@ namespace VRGardenAlpha
             builder.Services.AddScoped<ICaptchaService, CloudflareCaptchaService>();
             builder.Services.AddScoped<IRemoteAddressService, RemoteAddressService>();
             builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
+            builder.Services.AddScoped<IPackageInspectorService, PackageInspectorService>();
 
             builder.Services.AddDbContext<GardenContext>(o => o.UseNpgsql(builder.Configuration.GetConnectionString("Main")));
 
