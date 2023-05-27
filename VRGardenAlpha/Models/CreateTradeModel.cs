@@ -25,6 +25,26 @@ namespace VRGardenAlpha.Models
         public string? ContentLink { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "recipient.required")]
-        public required CreateTradeModel Recipient { get; set; }
+        public required CreateTradeRecipientModel Recipient { get; set; }
     }
+
+    public class CreateTradeRecipientModel
+    {
+        [Required(AllowEmptyStrings = false, ErrorMessage = "title.required")]
+        [StringLength(64, MinimumLength = 3, ErrorMessage = "title.length")]
+        public required string Title { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "creator.required")]
+        [StringLength(64, MinimumLength = 2, ErrorMessage = "creator.length")]
+        public required string Creator { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "trader.required")]
+        [StringLength(32, MinimumLength = 2, ErrorMessage = "trader.length")]
+        public required string Trader { get; set; }
+
+        [Url(ErrorMessage = "contentLink.invalid")]
+        [MaxLength(512, ErrorMessage = "contentLink.length")]
+        public string? ContentLink { get; set; }
+    }
+        
 }
