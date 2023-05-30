@@ -237,7 +237,7 @@ namespace VRGardenAlpha.Controllers
             if (request.Passcode != curr.Passcode)
                 return Unauthorized(new { error = "credentials.invalid" });
 
-            if (curr.LastChunk == curr.Chunks)
+            if (curr.LastChunk == curr.Chunks && (curr.LastChunk != 0 && curr.Chunks != 0))
                 return BadRequest(new { error = "file.complete" });
 
             if (request.Chunk > (curr.LastChunk + 1) || request.Chunk <= curr.LastChunk)
