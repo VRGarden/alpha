@@ -14,6 +14,7 @@ namespace VRGardenAlpha
                     opt.MapFrom(src => src.Timestamp));
 
             CreateMap<Trade, TradeModel>();
+            CreateMap<TradeDetails, TradeDetailsModel>();
         }
     }
 }
