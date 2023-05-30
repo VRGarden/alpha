@@ -208,13 +208,12 @@ namespace VRGardenAlpha.Controllers
             path = Path.Combine(_options.MountPath!, "trade_" + trade.Id + "_recipient_image" + ext);
             await ImageProcessor.ProcessImage(request.RecipientImage.OpenReadStream(), request.RecipientImage.ContentType, path);
 
-            Console.WriteLine("CT LENGTH 1: " + trade.Recipient.ImageContentLength);
             fi = new FileInfo(path);
             trade.Recipient.ImageContentType = request.RecipientImage.ContentType == "image/gif"
                 ? request.RecipientImage.ContentType : "image/jpeg";
             trade.Recipient.ImageContentLength = fi.Length;
 
-            Console.WriteLine("CT LENGTH 2: " + trade.Recipient.ImageContentLength);
+            _ctx.Entry(trade).State = EntityState.Modified;
             await _ctx.SaveChangesAsync();
             return NoContent();
         }
@@ -291,6 +290,7 @@ namespace VRGardenAlpha.Controllers
                 else trade.RecipientPaths = paths;
             }
 
+            _ctx.Entry(trade).State = EntityState.Modified;
             await _ctx.SaveChangesAsync();
 
             return Ok(new
