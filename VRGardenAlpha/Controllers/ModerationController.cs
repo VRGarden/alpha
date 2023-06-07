@@ -33,7 +33,7 @@ namespace VRGardenAlpha.Controllers
 
         [HttpPost]
         [RequiresMaster]
-        [Route("/_packages/clean")]
+        [Route("/_packages/delete-system")]
         public async Task<IActionResult> CleanPackagesAsync()
         {
             var packages = await _ctx.Posts.Where(x => x.FileName.EndsWith(".unitypackage"))
@@ -42,11 +42,14 @@ namespace VRGardenAlpha.Controllers
 
             foreach(var package in packages)
             {
-                Console.WriteLine("Cleaning " + package.Id);
                 string path = Path.Combine("/var/www/vrcg-storage/" + package.Id + ".unitypackage");
-                await _packages.CleanPackageAsync(path);
+                string imagePath = Path.Combine("/var/www/vrcg-storage/" + package.Id + "_image.jpg");
+                System.IO.File.Delete(path);
+                System.IO.File.Delete(imagePath);
+                _ctx.Remove(package);
             }
 
+            await _ctx.SaveChangesAsync();
             return Ok(true);
         }
 
