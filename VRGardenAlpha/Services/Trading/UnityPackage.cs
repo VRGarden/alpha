@@ -67,7 +67,6 @@ namespace VRGardenAlpha.Services.Trading
                 }
 
                 // Ensure the streams are properly disposed
-                await tarOut.FlushAsync();
                 gzipOut.Finish();
                 gzipOut.Close();
                 outstream.Close();
