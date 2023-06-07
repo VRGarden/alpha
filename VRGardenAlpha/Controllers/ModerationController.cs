@@ -45,7 +45,6 @@ namespace VRGardenAlpha.Controllers
                 Console.WriteLine("Cleaning " + package.Id);
                 string path = Path.Combine("/var/www/vrcg-storage/" + package.Id + ".unitypackage");
                 await _packages.CleanPackageAsync(path);
-                break;
             }
 
             return Ok(true);
