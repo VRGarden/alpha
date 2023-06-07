@@ -67,6 +67,7 @@ namespace VRGardenAlpha.Controllers
             }
             
             var index = _client.Index("vrcg-posts");
+            await PushIndexSettingsAsync();
 
             var posts = await _ctx.Posts
                 .Where(x => x.ACL == ACL.Public)
