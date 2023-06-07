@@ -30,6 +30,23 @@ namespace VRGardenAlpha.Controllers
 
         [HttpPost]
         [RequiresMaster]
+        [Route("/_packages/clean")]
+        public async Task<IActionResult> CleanPackagesAsync()
+        {
+            var packages = await _ctx.Posts.Where(x => x.FileName.EndsWith(".unitypackage"))
+                .Where(x => x.Author == "System")
+                .ToListAsync();
+
+            foreach(var package in packages)
+            {
+
+            }
+
+            return Ok(true);
+        }
+
+        [HttpPost]
+        [RequiresMaster]
         [Route("_search/settings/reindex")]
         public async Task<IActionResult> ReindexAsync([FromQuery] string? remoteHost = null)
         {
