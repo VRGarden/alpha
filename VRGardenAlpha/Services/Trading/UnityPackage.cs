@@ -56,7 +56,7 @@ namespace VRGardenAlpha.Services.Trading
                 }
 
                 using var outstream = File.OpenWrite(final);
-                using var gzipOut = new GZipOutputStream(stream);
+                using var gzipOut = new GZipOutputStream(outstream);
                 using var tarOut = new TarWriter(gzipOut);
                 foreach (var en in entries)
                     if (remove.Contains(en))
