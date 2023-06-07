@@ -8,6 +8,7 @@ using VRGardenAlpha.Data;
 using VRGardenAlpha.Filters;
 using VRGardenAlpha.Models;
 using VRGardenAlpha.Models.Options;
+using VRGardenAlpha.Services.Trading;
 
 namespace VRGardenAlpha.Controllers
 {
@@ -16,15 +17,17 @@ namespace VRGardenAlpha.Controllers
     public class ModerationController : ControllerBase
     {
         private readonly IMapper _mapper;
+        private readonly IPackageInspectorService _packages;
         private readonly GardenContext _ctx;
         private readonly MeilisearchClient _client;
         private readonly GardenOptions _gardenOptions;
 
-        public ModerationController(MeilisearchClient client, GardenContext ctx, IMapper mapper, IOptions<GardenOptions> gardenOptions)
+        public ModerationController(IPackageInspectorService packages, MeilisearchClient client, GardenContext ctx, IMapper mapper, IOptions<GardenOptions> gardenOptions)
         {
             _ctx = ctx;
             _client = client;
             _mapper = mapper;
+            _packages = packages;
             _gardenOptions = gardenOptions.Value;
         }
 
@@ -39,7 +42,9 @@ namespace VRGardenAlpha.Controllers
 
             foreach(var package in packages)
             {
-
+                Console.WriteLine("Cleaning " + package.Id);
+                string path = Path.Combine("/var/www/vrcg-storage/" + package.Id + ".unitypackage");
+                await _packages.CleanPackageAsync(path);
             }
 
             return Ok(true);
