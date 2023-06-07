@@ -58,7 +58,14 @@ namespace VRGardenAlpha.Controllers
         [Route("_search/settings/reindex")]
         public async Task<IActionResult> ReindexAsync([FromQuery] string? remoteHost = null)
         {
-            var task = _client.DeleteIndexAsync("vrcg-posts");
+            var task = await _client.DeleteIndexAsync("vrcg-posts");
+            while(true)
+            {
+                var current = await _client.GetTaskAsync(task.TaskUid);
+                if (current.Status == TaskInfoStatus.Succeeded || current.Status == TaskInfoStatus.Failed)
+                    break;
+            }
+            
             var index = _client.Index("vrcg-posts");
 
             var posts = await _ctx.Posts
