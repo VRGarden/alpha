@@ -59,13 +59,21 @@ namespace VRGardenAlpha.Services.Trading
                 using var gzipOut = new GZipOutputStream(outstream);
                 using var tarOut = new TarWriter(gzipOut);
                 foreach (var en in entries)
+                {
                     if (remove.Contains(en))
                         continue;
                     else
                         await tarOut.WriteEntryAsync(en);
+                }
 
+                // Ensure the streams are properly disposed
+                await tarOut.FlushAsync();
+                gzipOut.Finish();
+                gzipOut.Close();
+                outstream.Close();
                 tarOut.Dispose();
                 tar.Dispose();
+
                 return final;
             }
             catch(Exception exception)
