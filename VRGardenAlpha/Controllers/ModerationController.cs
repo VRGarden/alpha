@@ -46,7 +46,7 @@ namespace VRGardenAlpha.Controllers
                 string imagePath = Path.Combine("/var/www/vrcg-storage/" + package.Id + "_image.jpg");
                 System.IO.File.Delete(path);
                 System.IO.File.Delete(imagePath);
-                _ctx.Remove(package);
+                _ctx.Posts.Remove(package);
             }
 
             await _ctx.SaveChangesAsync();
@@ -69,6 +69,7 @@ namespace VRGardenAlpha.Controllers
             var index = _client.Index("vrcg-posts");
 
             var posts = await _ctx.Posts
+                .Where(x => x.ACL == ACL.Public)
                 .ToListAsync();
 
             var host = Request.Headers.Host;
