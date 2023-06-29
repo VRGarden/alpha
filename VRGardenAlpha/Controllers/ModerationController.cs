@@ -147,6 +147,12 @@ namespace VRGardenAlpha.Controllers
             post.ACL = request.ACL;
             await _ctx.SaveChangesAsync();
 
+            if(post.ACL != ACL.Public)
+            {
+                var index = _client.Index("vrcg-posts");
+                await index.DeleteOneDocumentAsync(post.Id);
+            }
+
             return NoContent();
         }
     }
